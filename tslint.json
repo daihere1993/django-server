@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "tslint-config-alloy"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "**/node_modules/**"
+        ]
+    },
+    "rules": {
+        "ordered-imports": false,
+        "no-string-literal": false,
+        "no-magic-numbers": false,
+        "no-implicit-dependencies": false,
+        "no-invalid-this": false,
+        "no-parameter-properties": false,
+        "no-parameter-reassignment": false,
+        "member-ordering": false,
+        "member-access": false,
+        "class-name": false
+    }
+}

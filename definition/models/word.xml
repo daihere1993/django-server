@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" name="word" ?>
+<fields>
+    <!-- 单词的拼写 -->
+    <name type="text"></name>
+    <!-- 单词的描述，含义 -->
+    <description type="text"></description>
+    <!-- 所属的组，可以是某本单词书 -->
+    <group type="submodel.group"></group>
+    <!-- 对应单词书里面的 list -->
+    <list type="submodel.list"></list>
+    <!-- 音标 -->
+    <phonetic type="map">
+        <!-- 第一个是英式，第二个是美式 -->
+        <symbols type="array"></symbols>
+        <!-- 发音音频 -->
+        <audio type="array"></audio>
+    </phonetic>
+    <!-- 关联单词 -->
+    <refWords type="array"></refWords>
+</fields>
+<submodels>
+    <model name="group">
+        <fields>
+            <name type="text"></name>
+            <description type="text"></description>
+        </fields>
+    </model>
+    <model name="list">
+        <fields>
+            <name type="text"></name>
+            <description type="text"></description>
+            <group type="model.word_group"></group>
+        </fields>
+    </model>
+</submodels>

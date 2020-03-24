@@ -1,0 +1,11 @@
+{
+    "cSpell.words": ["gutil", "nestjs", "promisify", "strtegy"],
+    "emmet.triggerExpansionOnTab": true,
+    "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
+    "cSpell.enabled": false,
+    "editor.formatOnSave": true,
+    "editor.foldingStrategy": "indentation",
+    "prettier.printWidth": 100,
+    "editor.tabCompletion": "on",
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+}

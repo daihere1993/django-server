@@ -1,4 +1,3 @@
-import Logger from '../logger';
 import { MongoModel } from '../common/types';
 import { Controller, Post, Body, HttpException, HttpStatus, HttpCode } from '@nestjs/common';
 import { InjectModels } from '../database/mongo.decorators';

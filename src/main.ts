@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import Logger from './logger';
-import * as config from 'config';
 
 const logger = Logger.forModule('Mongo');
 

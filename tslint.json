@@ -1,11 +1,7 @@
 {
-    "extends": [
-        "tslint-config-alloy"
-    ],
+    "extends": ["tslint-config-alloy"],
     "linterOptions": {
-        "exclude": [
-            "**/node_modules/**"
-        ]
+        "exclude": ["**/node_modules/**"]
     },
     "rules": {
         "ordered-imports": false,

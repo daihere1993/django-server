@@ -1,6 +1,6 @@
 import { MongoModel, EntityParams, Filter } from './../common/types';
 import { InjectModels } from '../database/mongo.decorators';
-import { Controller, Post, Delete, Body, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import Logger from '../logger';
 import * as _ from 'underscore';
 import * as mongoose from 'mongoose';
@@ -35,7 +35,7 @@ export class EntityController {
         const model = this.getModelByBody(body);
         try {
             const ret = await model.instance.create(body.entity);
-            let value = {};
+            const value = {};
             if (retFields) {
                 const entity = await model.instance.findById(ret._id).select(retFields.join(''));
                 for (const field of retFields) {

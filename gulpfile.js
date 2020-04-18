@@ -24,7 +24,7 @@ function xml2json(options) {
         }
 
         tempWrite(file.contents, path.extname(file.path)).then(function(tempFile) {
-            fs.stat(tempFile, function(err, stats) {
+            fs.stat(tempFile, function(err) {
                 if (err) {
                     return cb(new gutil.PluginError('gulp-xml2json', err));
                 }

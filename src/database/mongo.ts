@@ -60,13 +60,12 @@ export class Mongo {
             if (schemaType.options.ref) paths += ' ' + pathname;
         });
 
-        schema.pre('find', handler);
-        schema.pre('findOne', handler);
-
-        function handler(next) {
+        function handler(next: any) {
             this.populate(paths);
             next();
         }
+        schema.pre('find', handler);
+        schema.pre('findOne', handler);
     }
 
     private isSubmode(type: string): boolean {
@@ -158,7 +157,7 @@ export class Mongo {
     }
 
     private createSchemas(paramsMap: SchemaParamsMap): SchemaObj[] {
-        let shcemas = [] as SchemaObj[];
+        const shcemas = [] as SchemaObj[];
         for (const [name, params] of Object.entries(paramsMap)) {
             const instance = new mongoose.Schema();
             if (params.includePassword) {

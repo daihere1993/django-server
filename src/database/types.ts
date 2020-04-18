@@ -6,7 +6,13 @@ export enum ExtendSchemaType {
     MODEL = 'model',
     MAP = 'map'
 }
-export type SchemaTypeUnion = StringConstructor | NumberConstructor | BooleanConstructor | ArrayConstructor | DateConstructor | ExtendSchemaType;
+export type SchemaTypeUnion =
+    | StringConstructor
+    | NumberConstructor
+    | BooleanConstructor
+    | ArrayConstructor
+    | DateConstructor
+    | ExtendSchemaType;
 export interface SchemaParamsMap {
     [schemaName: string]: {
         [field: string]: SchemaTypeUnion | any;

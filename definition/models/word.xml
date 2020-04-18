@@ -17,8 +17,8 @@
     </phonetic>
     <!-- 关联单词 -->
     <refWords type="array"></refWords>
-</fields>
-<submodels>
+    <examples type="array"></examples>
+</fields><submodels>
     <model name="group">
         <fields>
             <name type="text"></name>

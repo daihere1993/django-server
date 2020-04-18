@@ -98,6 +98,8 @@ describe('Entity API (e2e)', () => {
                     expect(res.body.ok).toBe(1);
                     expect(res.body.entity).toBeDefined();
                     expect(res.body.entity.name).toBe('T-Mac');
+                    expect(res.body.entity.createdAt).toBeDefined();
+                    expect(res.body.entity.updatedAt).toBeDefined();
                     done();
                 });
         });

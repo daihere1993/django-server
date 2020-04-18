@@ -159,7 +159,8 @@ export class Mongo {
     private createSchemas(paramsMap: SchemaParamsMap): SchemaObj[] {
         const shcemas = [] as SchemaObj[];
         for (const [name, params] of Object.entries(paramsMap)) {
-            const instance = new mongoose.Schema();
+            // timestamps: will add a createdAt and updatedAt fields automatically
+            const instance = new mongoose.Schema(null, { timestamps: true });
             if (params.includePassword) {
                 const _field = params.passwordField;
                 instance.pre('save', async function(next) {

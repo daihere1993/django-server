@@ -18,16 +18,16 @@ export const defUtiles = {
     getModelName(def: ModelDef): string {
         return def.declaration.attributes.name;
     },
-    getDefByTagname(def: DefElement, tagname: string): DefElement {
-        return def.elements.filter((ele) => {
-            return ele.name === tagname;
+    getElementDef(defs: DefElement[], name: string): DefElement {
+        return defs.filter((item) => {
+            return item.name === name;
         })[0];
     },
     async getRefFieldsInfo$(modelName: string): Promise<{ refModel: string; field: string }[]> {
         const fields = [] as { refModel: string; field: string }[];
-        const def = await defUtiles.getModelDef$(modelName);
-        const fieldsDef = defUtiles.getDefByTagname(def, 'fields');
-        for (const fieldDef of fieldsDef.elements) {
+        const modelDef = await defUtiles.getModelDef$(modelName);
+        const fieldsDef = defUtiles.getElementDef(modelDef.content, 'fields');
+        for (const fieldDef of fieldsDef.children) {
             if (fieldDef.attributes.type.split('.')[0] === 'model') {
                 fields.push({ refModel: fieldDef.attributes.type.split('.')[1], field: fieldDef.name });
             }

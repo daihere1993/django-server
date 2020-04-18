@@ -8,6 +8,29 @@ const map = require('map-stream');
 const gutil = require('gulp-util');
 const convert = require('xml-js');
 
+//
+function _formatElements(elements) {
+    const ret = [];
+    for (const item of elements) {
+        if (item.type === 'element') {
+            ret.push({
+                name: item.name,
+                attributes: item.attributes,
+                children: item.elements && item.elements.length ? _formatElements(item.elements) : []
+            });
+        }
+    }
+    return ret;
+}
+
+function formatJson(json) {
+    const obj = JSON.parse(json);
+    return JSON.stringify({
+        declaration: obj.declaration,
+        content: _formatElements(obj.elements)
+    });
+}
+
 function xml2json(options) {
     return map(function(file, cb) {
         if (file.isNull()) {
@@ -36,7 +59,8 @@ function xml2json(options) {
 
                     options = options || { compact: false, spaces: 4, ignoreComment: true };
 
-                    file.contents = new Buffer.from(convert.xml2json(data, options));
+                    // file.contents = new Buffer.from(convert.xml2json(data, options));
+                    file.contents = new Buffer.from(formatJson(convert.xml2json(data)));
                     file.path = gutil.replaceExtension(file.path, '.json');
                     cb(null, file);
                 });

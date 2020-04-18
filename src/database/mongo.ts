@@ -38,9 +38,8 @@ export class Mongo {
     private createModels(defs: ModelDef[]): MongoModel[] {
         const models: MongoModel[] = [];
         for (const def of defs) {
-            const rootDef = { elements: def.elements };
             const modelName = defUtiles.getModelName(def);
-            const schemaParamsMap = this.createSchemaParamsMap(rootDef, modelName);
+            const schemaParamsMap = this.createSchemaParamsMap(def.content, modelName);
             const schemas = this.createSchemas(schemaParamsMap);
             for (const schema of schemas) {
                 models.push({
@@ -94,8 +93,8 @@ export class Mongo {
                 break;
             case ExtendSchemaType.MAP:
                 schemaType = {};
-                for (const element of fieldDef.elements) {
-                    schemaType[element.name] = this.getSchemaType(element, modelName);
+                for (const child of fieldDef.children) {
+                    schemaType[child.name] = this.getSchemaType(child, modelName);
                 }
                 break;
             case ExtendSchemaType.PASSWORD:
@@ -113,9 +112,9 @@ export class Mongo {
         return schemaType;
     }
 
-    private createSchemaParamsMap(def: DefElement, modelName: string): SchemaParamsMap {
+    private createSchemaParamsMap(rootDefs: DefElement[], modelName: string): SchemaParamsMap {
         const schemaParamsMap = {};
-        const fieldsDef = defUtiles.getDefByTagname(def, 'fields').elements;
+        const fieldsDef = defUtiles.getElementDef(rootDefs, 'fields').children;
         const schemaParams = {};
 
         for (const fieldDef of fieldsDef) {
@@ -125,16 +124,16 @@ export class Mongo {
                     // Needs create new model for this submodel
                     let targetModelDef: DefElement;
                     const _submodelName = fieldDef.attributes.type.split('.')[1];
-                    const submodelDef = defUtiles.getDefByTagname(def, 'submodels');
-                    for (const element of submodelDef.elements) {
-                        if (element.attributes.name === _submodelName) {
-                            targetModelDef = element;
+                    const submodelDef = defUtiles.getElementDef(rootDefs, 'submodels');
+                    for (const child of submodelDef.children) {
+                        if (child.attributes.name === _submodelName) {
+                            targetModelDef = child;
                             break;
                         }
                     }
                     if (targetModelDef) {
                         const submodelName = `${modelName}_${_submodelName}`;
-                        _.extend(schemaParamsMap, this.createSchemaParamsMap(targetModelDef, submodelName));
+                        _.extend(schemaParamsMap, this.createSchemaParamsMap(targetModelDef.children, submodelName));
                     }
                     break;
                 case ExtendSchemaType.PASSWORD:

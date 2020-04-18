@@ -1,8 +1,7 @@
 export default {
     Path: {
-        rootDef: process.cwd() + '/definition',
-        modelDef: process.cwd() + '/definition/models',
-        distModelDef: process.cwd() + '/dist/definition/models'
+        modelDef: process.cwd() + '/definition',
+        distModelDef: process.cwd() + '/dist/definition'
     },
     Mongo: {
         server: 'mongodb://localhost/test',

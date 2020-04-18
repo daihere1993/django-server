@@ -18,7 +18,7 @@
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-        "e2e": "NODE_ENV= NODE_APP_INSTANCE=e2e npm run gulp && NODE_ENV= NODE_APP_INSTANCE=e2e jest --config ./jest-e2e.config.json --verbose"
+        "e2e": "NODE_ENV=e2e npm run gulp && NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose"
     },
     "dependencies": {
         "@nestjs/common": "^6.10.14",

@@ -21,12 +21,13 @@ export interface FieldDef {
     type: FieldType;
 }
 
+export type DefAttributeUnion = 'type' | 'name';
+
 export interface DefElement {
-    name?: string;
-    type?: 'element' | 'text';
-    attributes?: { type?: string; name?: string };
-    text?: string;
-    elements?: DefElement[];
+    // Tag name
+    name: string;
+    attributes: { [K in DefAttributeUnion]: string };
+    children: DefElement[];
 }
 
 export interface ModelDef {
@@ -37,8 +38,27 @@ export interface ModelDef {
             name: string;
         };
     };
-    elements: DefElement[];
+    content: DefElement[];
 }
+
+// export interface DefElement {
+//     name?: string;
+//     type?: 'element' | 'text';
+//     attributes?: { type?: string; name?: string };
+//     text?: string;
+//     elements?: DefElement[];
+// }
+
+// export interface ModelDef {
+//     declaration: {
+//         attributes: {
+//             version: string;
+//             encoding: string;
+//             name: string;
+//         };
+//     };
+//     elements: DefElement[];
+// }
 
 export interface AnyObject {
     [key: string]: any;

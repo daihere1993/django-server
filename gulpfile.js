@@ -1,13 +1,11 @@
 const gulp = require('gulp');
-const rename = require('gulp-rename');
 const config = require('config');
 const path = require('path');
-const fs = require('graceful-fs');
+const fs = require('fs');
 const tempWrite = require('temp-write');
-const map = require('map-stream');
+const mapStream = require('map-stream');
 const gutil = require('gulp-util');
 const convert = require('xml-js');
-const _ = require('underscore');
 
 function _getDefByName(def, name) {
     return def.filter((item) => {
@@ -88,18 +86,18 @@ function formatJson(json, fileName) {
 
     const fieldsDef = _getDefByName(rootElements, 'fields');
     const submodelsDef = _getDefByName(rootElements, 'submodels');
-    const formatedSubmodel = submodelsDef && _formatSubmodel(submodelsDef.elements, modelName);
+    const formatedSubmodels = submodelsDef && _formatSubmodel(submodelsDef.elements, modelName);
 
     return JSON.stringify({
         declaration: obj.declaration,
         content: {
-            fields: _formatElements(fieldsDef.elements, formatedSubmodel, modelName)
+            fields: _formatElements(fieldsDef.elements, formatedSubmodels, modelName)
         }
     });
 }
 
 function xml2json() {
-    return map(function(file, cb) {
+    return mapStream(function(file, cb) {
         if (file.isNull()) {
             return cb(null, file);
         }
@@ -118,7 +116,6 @@ function xml2json() {
                 if (err) {
                     return cb(new gutil.PluginError('gulp-xml2json', err));
                 }
-
                 fs.readFile(tempFile, { encoding: 'UTF-8' }, function(err, data) {
                     if (err) {
                         return cb(new gutil.PluginError('gulp-xml2json', err));
@@ -133,10 +130,11 @@ function xml2json() {
     });
 }
 
-exports.default = function() {
+gulp.task('compile-definition', function() {
     return gulp
         .src(config.get('Path.modelDef') + '/**/*.xml')
         .pipe(xml2json())
-        .pipe(rename({ extname: '.json' }))
         .pipe(gulp.dest(config.get('Path.distModelDef')));
-};
+});
+
+gulp.task('default', gulp.series('compile-definition', 'def2TsInterface'));

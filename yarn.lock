@@ -252,6 +252,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@daihere1993/dsp@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@daihere1993/dsp/-/dsp-0.0.2.tgz#0af21ce021528edbb83da23f29f5ab3134e36edf"
+  integrity sha512-mIPrWEtDFfp+zrtfpsWr5Xl+chhq2LvYDZv/wk7Tuet6zNcsU4j/6z4xZjlupC3ZsnJoQo+l2AepVF8UGSvdpQ==
+  dependencies:
+    underscore "^1.10.2"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@istanbuljs/load-nyc-config/download/@istanbuljs/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"
@@ -5684,9 +5691,9 @@ map-stream@0.0.4:
   resolved "https://registry.npm.taobao.org/map-stream/download/map-stream-0.0.4.tgz#5ec6de90213ef6c7b2eb9367e9ade8da4efdb68b"
   integrity sha1-XsbekCE+9sey65Nn6a3o2k79tos=
 
-map-stream@>=0.0.4:
+map-stream@>=0.0.4, map-stream@^0.0.7:
   version "0.0.7"
-  resolved "https://registry.npm.taobao.org/map-stream/download/map-stream-0.0.7.tgz#8a1f07896d82b10926bd3744a2420009f88974a8"
+  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.0.7.tgz#8a1f07896d82b10926bd3744a2420009f88974a8"
   integrity sha1-ih8HiW2CsQkmvTdEokIACfiJdKg=
 
 map-visit@^1.0.0:
@@ -8144,7 +8151,7 @@ temp-dir@^1.0.0:
   resolved "https://registry.npm.taobao.org/temp-dir/download/temp-dir-1.0.0.tgz#0a7c0ea26d3a39afa7e0ebea9c1fc0bc4daa011d"
   integrity sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=
 
-temp-write@*:
+temp-write@*, temp-write@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npm.taobao.org/temp-write/download/temp-write-4.0.0.tgz#cd2e0825fc826ae72d201dc26eef3bf7e6fc9320"
   integrity sha1-zS4IJfyCauctIB3Cbu879+b8kyA=
@@ -8571,6 +8578,11 @@ unc-path-regex@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/unc-path-regex/download/unc-path-regex-0.1.2.tgz#e73dd3d7b0d7c5ed86fbac6b0ae7d8c6a69d50fa"
   integrity sha1-5z3T17DXxe2G+6xrCufYxqadUPo=
+
+underscore@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.10.2.tgz#73d6aa3668f3188e4adb0f1943bd12cfd7efaaaf"
+  integrity sha512-N4P+Q/BuyuEKFJ43B9gYuOj4TQUHXX+j2FqguVOpjkssLUUrnJofCcBccJSCoeturDoZU6GorDTHSvUDlSQbTg==
 
 underscore@^1.9.2:
   version "1.9.2"
@@ -9078,7 +9090,7 @@ ws@^7.0.0:
   resolved "https://registry.npm.taobao.org/ws/download/ws-7.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fws%2Fdownload%2Fws-7.2.1.tgz#03ed52423cd744084b2cf42ed197c8b65a936b8e"
   integrity sha1-A+1SQjzXRAhLLPQu0ZfItlqTa44=
 
-xml-js@*:
+xml-js@*, xml-js@^1.6.11:
   version "1.6.11"
   resolved "https://registry.npm.taobao.org/xml-js/download/xml-js-1.6.11.tgz#927d2f6947f7f1c19a316dd8eea3614e8b18f8e9"
   integrity sha1-kn0vaUf38cGaMW3Y7qNhTosY+Ok=

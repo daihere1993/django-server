@@ -18,18 +18,19 @@
     <!-- 关联单词 -->
     <refWords type="array"></refWords>
     <examples type="array"></examples>
-</fields><submodels>
-    <model name="group">
+</fields>
+<submodels>
+    <group>
         <fields>
             <name type="text"></name>
             <description type="text"></description>
         </fields>
-    </model>
-    <model name="list">
+    </group>
+    <list>
         <fields>
             <name type="text"></name>
             <description type="text"></description>
-            <group type="model.word_group"></group>
+            <group type="submodel.group"></group>
         </fields>
-    </model>
+    </list>
 </submodels>

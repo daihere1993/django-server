@@ -8,26 +8,15 @@ export interface MongoModel {
     instance: Model<Document>;
 }
 
-/**
- * Field types
- */
-export type FieldType = 'text' | 'number' | 'boolean' | 'textarea' | 'data';
-
-/**
- * Definition types
- */
-export interface FieldDef {
-    name: string;
-    type: FieldType;
-}
-
-export type DefAttributeUnion = 'type' | 'name';
-
-export interface DefElement {
+export interface ModelElDef {
     // Tag name
     name: string;
-    attributes: { [K in DefAttributeUnion]: string };
-    children: DefElement[];
+    attributes: {
+        type?: string;
+        name?: string;
+        submodel?: ModelElDef;
+    };
+    children: ModelElDef[];
 }
 
 export interface ModelDef {
@@ -38,27 +27,10 @@ export interface ModelDef {
             name: string;
         };
     };
-    content: DefElement[];
+    content: {
+        fields: ModelElDef[];
+    };
 }
-
-// export interface DefElement {
-//     name?: string;
-//     type?: 'element' | 'text';
-//     attributes?: { type?: string; name?: string };
-//     text?: string;
-//     elements?: DefElement[];
-// }
-
-// export interface ModelDef {
-//     declaration: {
-//         attributes: {
-//             version: string;
-//             encoding: string;
-//             name: string;
-//         };
-//     };
-//     elements: DefElement[];
-// }
 
 export interface AnyObject {
     [key: string]: any;

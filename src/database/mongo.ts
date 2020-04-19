@@ -1,4 +1,4 @@
-import { MongoModel, ModelDef, DefElement } from 'src/common/types';
+import { MongoModel, ModelDef, ModelElDef } from 'src/common/types';
 import { SCHEMA_TYPES, SchemaParamsMap, ExtendSchemaType, SchemaObj, SchemaTypeUnion } from './types';
 import { defUtiles } from '@app/common/utils';
 import Logger from '../logger';
@@ -39,7 +39,7 @@ export class Mongo {
         const models: MongoModel[] = [];
         for (const def of defs) {
             const modelName = defUtiles.getModelName(def);
-            const schemaParamsMap = this.createSchemaParamsMap(def.content, modelName);
+            const schemaParamsMap = this.createSchemaParamsMap(def.content.fields, modelName);
             const schemas = this.createSchemas(schemaParamsMap);
             for (const schema of schemas) {
                 models.push({
@@ -67,29 +67,17 @@ export class Mongo {
         schema.pre('findOne', handler);
     }
 
-    private isSubmode(type: string): boolean {
-        return type.includes('submodel');
-    }
-
-    private getRealType(type: string): string {
-        return type.split('.')[0];
-    }
-
-    private getSchemaType(fieldDef: DefElement, modelName: string): SchemaTypeUnion | { type: string; ref: string } {
+    private getSchemaType(fieldDef: ModelElDef, modelName: string): SchemaTypeUnion | { type: string; ref: string } {
         let schemaType: any;
-        const type = SCHEMA_TYPES[this.getRealType(fieldDef.attributes.type)];
+        const type = SCHEMA_TYPES[fieldDef.attributes.type];
         switch (type) {
             case ExtendSchemaType.MODEL:
             case ExtendSchemaType.SUBMODEL:
-                let refModel = fieldDef.attributes.type.split('.')[1];
-                if (this.isSubmode(fieldDef.attributes.type)) {
-                    refModel = `${modelName}_${refModel}`;
+                const submodelDef = fieldDef.attributes.submodel;
+                if (!submodelDef) {
+                    throw new Error(`Not define corresponding submodel of field "${fieldDef.name}"`);
                 }
-                if (!refModel) {
-                    const error = new Error(`There\'s no refered model of field: ${fieldDef.name}`);
-                    throw error;
-                }
-                schemaType = { type: mongoose.Types.ObjectId, ref: refModel };
+                schemaType = { type: mongoose.Types.ObjectId, ref: submodelDef.name };
                 break;
             case ExtendSchemaType.MAP:
                 schemaType = {};
@@ -112,29 +100,23 @@ export class Mongo {
         return schemaType;
     }
 
-    private createSchemaParamsMap(rootDefs: DefElement[], modelName: string): SchemaParamsMap {
-        const schemaParamsMap = {};
-        const fieldsDef = defUtiles.getElementDef(rootDefs, 'fields').children;
+    private createSchemaParamsMap(fieldsDef: ModelElDef[], modelName: string): SchemaParamsMap {
         const schemaParams = {};
+        const schemaParamsMap = {};
 
         for (const fieldDef of fieldsDef) {
-            const type = this.getRealType(fieldDef.attributes.type);
+            const type = fieldDef.attributes.type;
             switch (type) {
                 case ExtendSchemaType.SUBMODEL:
+                    const submodelDef = fieldDef.attributes.submodel;
+                    if (!submodelDef) {
+                        throw new Error(`Not define corresponding submodel of field "${fieldDef.name}"`);
+                    }
                     // Needs create new model for this submodel
-                    let targetModelDef: DefElement;
-                    const _submodelName = fieldDef.attributes.type.split('.')[1];
-                    const submodelDef = defUtiles.getElementDef(rootDefs, 'submodels');
-                    for (const child of submodelDef.children) {
-                        if (child.attributes.name === _submodelName) {
-                            targetModelDef = child;
-                            break;
-                        }
-                    }
-                    if (targetModelDef) {
-                        const submodelName = `${modelName}_${_submodelName}`;
-                        _.extend(schemaParamsMap, this.createSchemaParamsMap(targetModelDef.children, submodelName));
-                    }
+                    _.extend(
+                        schemaParamsMap,
+                        this.createSchemaParamsMap(submodelDef.children[0].children, submodelDef.name)
+                    );
                     break;
                 case ExtendSchemaType.PASSWORD:
                     schemaParams['includePassword'] = true;

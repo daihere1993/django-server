@@ -1,1 +1,3 @@
-export { DynamicMongoModule } from './mongo.decorators';
+import { DynamicMongoModule } from './mongo.decorators';
+
+export default DynamicMongoModule;

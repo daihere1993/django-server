@@ -1,0 +1,38 @@
+{
+  "declaration": {
+    "attributes": { "version": "1.0", "encoding": "utf-8", "name": "word" }
+  },
+  "fields": [
+    { "name": "name", "type": "text" },
+    { "name": "description", "type": "text" },
+    { "name": "group", "type": "submodel.group" },
+    { "name": "list", "type": "submodel.list" },
+    {
+      "name": "phonetic",
+      "type": "map",
+      "map": [
+        { "name": "symbols", "type": "array" },
+        { "name": "audio", "type": "array" }
+      ]
+    },
+    { "name": "refWords", "type": "array" },
+    { "name": "examples", "type": "array" }
+  ],
+  "submodels": [
+    {
+      "name": "group",
+      "fields": [
+        { "name": "name", "type": "text" },
+        { "name": "description", "type": "text" }
+      ]
+    },
+    {
+      "name": "list",
+      "fields": [
+        { "name": "name", "type": "text" },
+        { "name": "description", "type": "text" },
+        { "name": "group", "type": "submodel.group" }
+      ]
+    }
+  ]
+}

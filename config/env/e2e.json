@@ -1,0 +1,9 @@
+{
+  "Path": {
+    "modelDef": "/test/mock",
+    "distModelDef": "/test/dist"
+  },
+  "Mongo": {
+    "server": "mongodb://localhost/e2e"
+  }
+}

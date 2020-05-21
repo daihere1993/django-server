@@ -1,0 +1,11 @@
+{
+  "Path": {
+    "modelDef": "/definition",
+    "distModelDef": "/dist/definition"
+  },
+  "Mongo": {
+    "server": "mongodb://localhost/test",
+    "SALT_ROUNDS": 10,
+    "JWT_CERT": "JWT_CERT"
+  }
+}

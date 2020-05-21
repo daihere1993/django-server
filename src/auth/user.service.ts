@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoModel } from '../common/types';
-import { InjectModels } from '../database/mongo.decorators';
+import { InjectModels } from '../mongo/mongo.decorators';
 
 @Injectable()
 export default class UserService {

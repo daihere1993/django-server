@@ -7,8 +7,8 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
-import * as config from 'config';
-import { InjectModels } from '../database/mongo.decorators';
+import { config } from 'node-config-ts';
+import { InjectModels } from '../mongo/mongo.decorators';
 import { MongoModel } from '../common/types';
 
 export interface UserParams {
@@ -54,7 +54,7 @@ export class UserController {
           name: user.name,
           exp: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60,
         },
-        config.get('Mongo.JWT_CERT'),
+        config.Mongo.JWT_CERT,
       );
 
       return { ok: 1, _id: user._id, token };

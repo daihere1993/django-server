@@ -1,0 +1,5 @@
+{
+  "inputFiles": ["./src/entity/entity.controller.ts"],
+  "mode": "modules",
+  "out": ["./dist/doc"]
+}

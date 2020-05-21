@@ -7,21 +7,27 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "doc": "typedoc --options ./typedocconfig.json",
     "gulp": "node_modules/.bin/gulp",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run gulp && nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "NODE_ENV=deployment yarn build && NODE_ENV=deployment node dist/src/main",
+    "start:prod": "NODE_ENV=production yarn build && NODE_ENV=production node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "e2e": "NODE_ENV=e2e npm run gulp && NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose"
+    "test": "npm run test:ut && npm run test:e2e",
+    "test:ut": "jest --config ./jest.config.json --verbose",
+    "test:ut-dev": "jest --config ./jest.config.json --verbose --watch",
+    "test:e2e": "NODE_ENV=e2e npm run gulp && NODE_ENV=e2e jest --config ./jest-e2e.config.json --verbose --forceExit",
+    "postinstall": "node-config-ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test && npm run lint"
+    }
   },
   "dependencies": {
-    "@daihere1993/dsp": "^0.0.2",
+    "@daihere1993/dsp": "^0.0.4",
     "@nestjs/common": "^6.10.14",
     "@nestjs/core": "^6.10.14",
     "@nestjs/jwt": "^6.1.2",
@@ -33,9 +39,11 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.3",
+    "node-config-ts": "^3.0.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
+    "require-dir": "^1.2.0",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.4",
     "underscore": "^1.9.2",
@@ -49,15 +57,14 @@
     "@types/cheerio": "^0.22.16",
     "@types/config": "^0.0.36",
     "@types/express": "^4.17.2",
+    "@types/gulp": "^4.0.6",
     "@types/jest": "25.1.2",
     "@types/jsonwebtoken": "^8.3.7",
     "@types/mongoose": "^5.7.3",
     "@types/node": "^13.1.6",
     "@types/supertest": "^2.0.8",
-    "@types/temp-write": "^4.0.0",
     "@types/underscore": "^1.9.4",
     "@types/winston": "^2.4.4",
-    "@types/xml-js": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.12.0",
     "eslint": "^6.7.2",
@@ -82,29 +89,8 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.7.4",
-    "xml-js": "^1.6.11"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": ".",
-    "roots": [
-      "./test/ut"
-    ],
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "^@app/(.*)$": "<rootDir>/src/$1",
-      "^@test/(.*)$": "<rootDir>/test/$1"
-    }
+    "typedoc": "^0.17.6",
+    "typescript": "^3.7.4"
   },
   "main": "index.js"
 }

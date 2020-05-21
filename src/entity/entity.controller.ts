@@ -2,7 +2,7 @@ import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import * as _ from 'underscore';
 import * as mongoose from 'mongoose';
 import { MongoModel, EntityParams, Filter } from '../common/types';
-import { InjectModels } from '../database/mongo.decorators';
+import { InjectModels } from '../mongo/mongo.decorators';
 import Logger from '../logger';
 
 const logger = Logger.forModule('EntityService');
@@ -23,6 +23,7 @@ export interface OperationOts {
 }
 
 @Controller('entityService')
+/** Just for test */
 export class EntityController {
   public constructor(
     @InjectModels()

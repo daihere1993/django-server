@@ -5,20 +5,20 @@ import {
   NestModule,
   MiddlewareConsumer,
 } from '@nestjs/common';
-import * as config from 'config';
-import AuthModule from './auth/auth.module';
-import DynamicMongoModule from './database';
+import { config } from 'node-config-ts';
 import { EntityController } from './entity/entity.controller';
+import AuthModule from './auth/auth.module';
+import DynamicMongoModule from './mongo';
 import DicMiddleware from './middlewares/dic.middleware';
 import LoggerMiddleware from './middlewares/logger.middleware';
 
 @Global()
 @Module({
   imports: [
-    // Initialize mongo models by model definition
-    DynamicMongoModule.forRoot(config.get('Mongo.server')),
     AuthModule,
     HttpModule,
+    // Initialize mongo models by model definition
+    DynamicMongoModule.forRoot(config.Mongo.server),
   ],
   controllers: [EntityController],
   providers: [],

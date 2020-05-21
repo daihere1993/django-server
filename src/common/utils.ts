@@ -1,11 +1,11 @@
 import * as util from 'util';
 import * as fs from 'fs';
-import * as config from 'config';
-import { ModelDef } from 'src/common/types';
+import { config } from 'node-config-ts';
+import { ModelDef } from 'common/types';
 
 const readdir = util.promisify(fs.readdir);
 const readFile = util.promisify(fs.readFile);
-const defPath = config.get('Path.distModelDef') as string;
+const defPath = (process.cwd() + config.Path.distModelDef) as string;
 
 export function firstUpperCase(str: string): string {
   return str.toLowerCase().replace(/( |^)[a-z]/g, L => L.toUpperCase());

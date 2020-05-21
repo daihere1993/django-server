@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   plugins: [
     '@typescript-eslint',
@@ -47,5 +49,18 @@ module.exports = {
     // Allow disable rules for whole file
     'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
+    'no-console': 'off',
+    'import/export': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: [
+          path.join(__dirname, 'gulpfile.ts'),
+          path.join(__dirname, 'test/**/*.ts'),
+        ],
+      },
+    ],
   },
 };

@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import AppModule from '../src/app.module';
-import deleteByID from './utils';
+import AppModule from '../../src/app.module';
+import deleteByID from '../utils';
 
 describe('User API (e2e)', () => {
   let server: any;

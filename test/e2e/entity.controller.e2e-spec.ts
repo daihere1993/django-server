@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import AppModule from '../src/app.module';
-import deleteByID from './utils';
+import AppModule from '../../src/app.module';
+import deleteByID from '../utils';
 
 describe('Entity API (e2e)', () => {
   let server: any;
@@ -32,7 +32,7 @@ describe('Entity API (e2e)', () => {
             entity: { name: 'admin' },
           })
           .expect(201)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body._id).toBeDefined();
             deleteByID(server, res.body._id, model);
@@ -52,17 +52,10 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({
             model,
-            entities: [
-              {
-                name: 'Curry',
-              },
-              {
-                name: 'Irving',
-              },
-            ],
+            entities: [{ name: 'Curry' }, { name: 'Irving' }],
           })
           .expect(201)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body._ids).toBeDefined();
             expect(res.body._ids.length).toBe(2);
@@ -100,7 +93,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, id })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entity).toBeDefined();
             expect(res.body.entity.name).toBe('T-Mac');
@@ -118,7 +111,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, id, retFields: ['account'] })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entity._id).toBeDefined();
             expect(res.body.entity.account).toBeDefined();
@@ -161,7 +154,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, ids })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(entities.length);
             resolve();
@@ -176,7 +169,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, ids, retFields: ['account'] })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(entities.length);
             expect(res.body.entities[0]._id).toBeDefined();
@@ -194,7 +187,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, ids, sort: { age: 'asc' } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities[0].name).toBe('Luka');
             expect(res.body.entities[3].name).toBe('Wade');
@@ -210,7 +203,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, ids, sort: { age: 'desc' } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities[0].name).toBe('Wade');
             expect(res.body.entities[3].name).toBe('Luka');
@@ -230,7 +223,7 @@ describe('Entity API (e2e)', () => {
             filter: { field: 'age', match: 'GT', value: 35 },
           })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(1);
             expect(res.body.entities[0]._id).toBeDefined();
@@ -252,7 +245,7 @@ describe('Entity API (e2e)', () => {
             sort: { age: 'asc' },
           })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities[0].name).toBe('Luka');
             expect(res.body.entities[3].name).toBe('Wade');
@@ -272,7 +265,7 @@ describe('Entity API (e2e)', () => {
             sort: { age: 'desc' },
           })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities[0].name).toBe('Wade');
             expect(res.body.entities[3].name).toBe('Luka');
@@ -288,7 +281,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'EQ', value: 34 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(2);
             resolve();
@@ -303,7 +296,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'LT', value: 40 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(4);
             resolve();
@@ -318,7 +311,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'GT', value: 34 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(1);
             expect(res.body.entities[0].name).toBe('Wade');
@@ -334,7 +327,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'LTE', value: 34 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.entities.length).toBe(3);
             resolve();
           });
@@ -348,7 +341,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'GTE', value: 36 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.entities.length).toBe(1);
             expect(res.body.entities[0].name).toBe('Wade');
@@ -384,7 +377,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, id, value: { account: 'westbrook521' } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             expect(res.body.ok).toBe(1);
             expect(res.body.value.account).toBe('westbrook521');
             resolve();
@@ -429,7 +422,7 @@ describe('Entity API (e2e)', () => {
             value: { evaluation: 'Old' },
           })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             // Will return: {"n":3,"nModified":3,"ok":1}
             expect(res.body.ok).toBe(1);
             // n means how many items satisfy the filter
@@ -464,7 +457,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, id })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             // Will return { ok: 1 }
             expect(res.body.ok).toBe(1);
             resolve();
@@ -508,7 +501,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, ids })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             // Will return { n: 4, ok: 1 }
             expect(res.body.ok).toBe(1);
             expect(res.body.n).toBe(4);
@@ -524,7 +517,7 @@ describe('Entity API (e2e)', () => {
           .set('Accept', 'application/json')
           .send({ model, filter: { field: 'age', match: 'EQ', value: 34 } })
           .expect(200)
-          .end((_err, res) => {
+          .end((err, res) => {
             // Will return { n: 2, ok: 1 }
             expect(res.body.ok).toBe(1);
             expect(res.body.n).toBe(2);

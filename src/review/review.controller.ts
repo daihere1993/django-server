@@ -1,6 +1,6 @@
-import { MongoModel } from 'src/common/types';
+import { MongoModel } from 'common/types';
 import { Controller } from '@nestjs/common';
-import { InjectModels } from '@app/database/mongo.decorators';
+import { InjectModels } from 'mongo/mongo.decorators';
 
 export enum QuestionType {
   // Word + Audio => choose right translation

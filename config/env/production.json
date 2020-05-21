@@ -1,0 +1,8 @@
+{
+  "Path": {
+    "distModelDef": "/node_modules/@daihere1993/dsp/dist/definition/"
+  },
+  "Mongo": {
+    "server": "mongodb://localhost/product"
+  }
+}

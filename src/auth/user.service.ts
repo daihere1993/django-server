@@ -1,19 +1,19 @@
-import { MongoModel } from '../common/types';
 import { Injectable } from '@nestjs/common';
-import { InjectModels } from '../database/mongo.decorators';
+import { MongoModel } from '../common/types';
+import { InjectModels } from '../mongo/mongo.decorators';
 
 @Injectable()
-export class UserService {
-    private model: MongoModel;
+export default class UserService {
+  private model: MongoModel;
 
-    public constructor(
-        @InjectModels()
-        models: MongoModel[]
-    ) {
-        this.model = models.find((model) => model.name === 'user');
-    }
+  public constructor(
+    @InjectModels()
+    models: MongoModel[],
+  ) {
+    this.model = models.find(model => model.name === 'user');
+  }
 
-    public async findOneByID(id: string): Promise<any> {
-        return await this.model.instance.findById(id);
-    }
+  public async findOneByID(id: string): Promise<any> {
+    return this.model.instance.findById(id);
+  }
 }
